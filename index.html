@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ユーザー登録フォーム</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">ユーザー登録フォーム</h1>
+
+    <!-- フォーム -->
+    <form id="register-form" novalidate class="space-y-4">
+
+      <!-- 名前 -->
+      <div>
+        <label for="name" class="block font-medium mb-1">名前</label>
+        <input
+          id="name"
+          type="text"
+          required
+          class="w-full border rounded p-2"
+        />
+        <p id="name-error" class="text-red-500 text-sm mt-1"></p>
+      </div>
+
+      <!-- メール -->
+      <div>
+        <label for="email" class="block font-medium mb-1">メールアドレス</label>
+        <input
+          id="email"
+          type="email"
+          required
+          class="w-full border rounded p-2"
+        />
+        <p id="email-error" class="text-red-500 text-sm mt-1"></p>
+      </div>
+
+      <!-- パスワード -->
+      <div>
+        <label for="password" class="block font-medium mb-1">パスワード（8文字以上）</label>
+        <input
+          id="password"
+          type="password"
+          required
+          class="w-full border rounded p-2"
+        />
+        <p id="password-error" class="text-red-500 text-sm mt-1"></p>
+      </div>
+
+      <!-- 利用規約 -->
+      <div class="flex items-center gap-2">
+        <input id="terms" type="checkbox" required />
+        <label for="terms" class="font-medium">利用規約に同意する</label>
+      </div>
+      <p id="terms-error" class="text-red-500 text-sm"></p>
+
+      <!-- 送信ボタン -->
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        登録する
+      </button>
+
+      <!-- 成功メッセージ -->
+      <p id="success-message" class="text-green-600 font-medium text-center mt-4"></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("register-form");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const termsInput = document.getElementById("terms");
+
+    const nameError = document.getElementById("name-error");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+    const termsError = document.getElementById("terms-error");
+    const successMessage = document.getElementById("success-message");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); // リロード防止
+
+      // エラー初期化
+      nameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+      termsError.textContent = "";
+      successMessage.textContent = "";
+
+      let hasError = false;
+
+      // 名前
+      if (nameInput.value.trim() === "") {
+        nameError.textContent = "名前を入力してください";
+        hasError = true;
+      }
+
+      // メール
+      if (emailInput.value.trim() === "") {
+        emailError.textContent = "メールアドレスを入力してください";
+        hasError = true;
+      } else if (!emailInput.value.includes("@")) {
+        emailError.textContent = "メールアドレスの形式が正しくありません";
+        hasError = true;
+      }
+
+      // パスワード
+      if (passwordInput.value.trim() === "") {
+        passwordError.textContent = "パスワードを入力してください";
+        hasError = true;
+      } else if (passwordInput.value.length < 8) {
+        passwordError.textContent = "パスワードは8文字以上にしてください";
+        hasError = true;
+      }
+
+      // 利用規約
+      if (!termsInput.checked) {
+        termsError.textContent = "利用規約に同意してください";
+        hasError = true;
+      }
+
+      // 成功
+      if (!hasError) {
+        successMessage.textContent = "登録完了！";
+      }
+    });
+  </script>
+
+</body>
+</html>
